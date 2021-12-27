@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Data
@@ -35,6 +36,14 @@ public class Board {
     // 어노테이션 설명: 필드명은 userId가 되고 연관관계는 ManyToOne.
     private User user;
     // db는 오브젝트를 저장할 수 없기 때문에 Foreign Key가 필요할때는 위처럼 한다.
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    // OneToMany는 기본값이 FetchType.LAZY임 ('필요할 때, 그 때서야 가져온다')
+    // 만약 바로 가져와야 하면 FetchType.EAGER로 바꿔야함.
+    // mappedBy가 붙은 것은 '연관 관계의 주인(FK를 가진것)이 아니다' 라는 뜻.
+    // mappedBy가 붙은 것은 FK가 아님 (board 테이블에 컬럼 만들지 않음)
+    // mappedBy의 'board'는 Reply.java 클래스의 멤버 변수 이름임.
+    private List<Reply> reply;
 
     @CreationTimestamp
     private Timestamp createDate;
