@@ -1,5 +1,9 @@
 package com.blog.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -7,6 +11,10 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity // 클래스를 Mysql에 테이블로 만들어줌
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder // 빌더패턴
 public class User {
     @Id //Primary key
     // GenerationType.IDENTITY: 이 프로젝트에 연결된 DB의 넘버링을 따라감
