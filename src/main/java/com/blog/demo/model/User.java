@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -31,8 +32,11 @@ public class User {
     @Column(nullable = false, length = 50)
     private String email;
 
-    @ColumnDefault("'user'") // 'user' 로 설정함
-    private String role; // 사실 이런 컬럼은 Enum을 쓰는게 좋음(도메인, 범위를 정할 수 있으므로)
+    // private String role; // 사실 이런 컬럼은 Enum을 쓰는게 좋음(도메인, 범위를 정할 수 있으므로)
+    // 이렇게 아래처럼 enum을 사용한다.
+    // 다만 DB에는 RoleType 이라는 타입이 없으니 아래와 같은 어노테이션을 붙여준다
+    @Enumerated(EnumType.STRING)
+    private RoleType role;
 
     @CreationTimestamp // 시간이 자동 입력됨
     private Timestamp createDate;
