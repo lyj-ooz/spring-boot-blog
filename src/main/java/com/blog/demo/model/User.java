@@ -23,7 +23,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // auto increment
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 30, unique = true)
     private String username;
 
     @Column(nullable = false, length = 100) // 해쉬로 암호화할것이기 때문에 넉넉히
