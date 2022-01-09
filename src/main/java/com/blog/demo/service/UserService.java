@@ -1,8 +1,10 @@
 package com.blog.demo.service;
 
+import com.blog.demo.model.RoleType;
 import com.blog.demo.model.User;
 import com.blog.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +17,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository; // DI
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     // Transactional 어노테이션을 붙이면 아래 save 안에 있는 것들이 하나의 트랜잭션으로 묶인다
     @Transactional
     public void save(User user) {
+        String rawPassword = user.getPassword();
+        String encodedPassword = encoder.encode(rawPassword); // 해쉬
+        user.setPassword(encodedPassword);
+        user.setRole(RoleType.USER);
         userRepository.save(user);
     }
 
