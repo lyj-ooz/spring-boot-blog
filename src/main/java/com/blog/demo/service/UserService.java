@@ -25,7 +25,7 @@ public class UserService {
     // select할 때 트랜잭션 시작되고 이 서비스 종료시에 트랜잭션도 종료되기 까지의 정합성을 유지할 수 있다.
     // 정합성: select를 여러번 하더라도 같은 데이터가 찾아짐
     @Transactional(readOnly = true)
-    public User login(User user) {
+    public User loginOld(User user) {
         return userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
     }
 }
