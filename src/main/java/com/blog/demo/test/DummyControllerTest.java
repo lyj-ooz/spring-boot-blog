@@ -60,6 +60,36 @@ public class DummyControllerTest {
         return user;
     }
 
+// patch ㅌㅔ스트
+    @Transactional
+    @PatchMapping("/dummy/user/{id}")
+    public User patchUser(@PathVariable Long id, @RequestBody User requestUser) {
+        System.out.println("id: " + id);
+        System.out.println("password: " + requestUser.getPassword());
+        System.out.println("email: " + requestUser.getEmail());
+
+        User user = userRepository.findById(id).orElseThrow(() -> {
+            return new IllegalArgumentException("수정에 실패하였습니다");
+        });
+
+        requestUser.setId(id);
+
+        if(requestUser.getUsername() != null) {
+            user.setUsername(requestUser.getUsername());
+        }
+
+        if(requestUser.getEmail() != null) {
+            user.setEmail(requestUser.getEmail());
+        }
+
+        if(requestUser.getPassword() != null) {
+            user.setPassword(requestUser.getPassword());
+        }
+
+        return user;
+    }
+//
+
     @GetMapping("/dummy/users")
     public List<User> list() {
         return userRepository.findAll();
