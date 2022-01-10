@@ -4,6 +4,8 @@ import com.blog.demo.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 // 자동으로 bean으로 등록된다 = 어디서나 injection 가능(DI)
 
 // 아래 제네릭의 의미 <User, Integer>
@@ -13,6 +15,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // JpaRepository의 findAll()
     // -> 이 테이블의 모든 행을 리턴
 
+    // SELECT * FROM user WHERE username = ?1
+    Optional<User> findByUsername(String username);
 
     // JPA Naming 쿼리 전략
     User findByUsernameAndPassword(String username, String password);
